@@ -21,7 +21,7 @@ import java.io.Serializable;
 @ToString
 @Entity
 @Table(name="user")
-public class UserDTO implements Serializable{
+public class UserDTO implements Serializable , User{
     @Id
     @Column(name="user_id")
     private String userId;

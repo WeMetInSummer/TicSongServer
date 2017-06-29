@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.annotation.sql.DataSourceDefinitions;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by kwongiho on 2017. 6. 27..
@@ -15,6 +16,8 @@ import javax.annotation.sql.DataSourceDefinitions;
 @NoArgsConstructor
 @ToString
 public class DeleteUser {
+    @NotNull
     private String userId;
+    @NotNull
     private String service;
 }

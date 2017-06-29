@@ -36,11 +36,16 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDTO register(String userId, String name, int platform) {
+
         return register(new UserDTO(userId,name,platform));
     }
 
     @Override
     public UserDTO register(UserDTO userDTO) {
-        return userDAO.save(userDTO);
+        UserDTO isRegister = userDAO.findByUserId(userDTO.getUserId());
+
+        if(isRegister == null || isRegister.getUserId() == null)
+            return userDAO.save(userDTO);
+        return null;
     }
 }

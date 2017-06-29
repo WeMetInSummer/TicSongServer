@@ -1,4 +1,4 @@
-package com.example.demo.error;
+package com.example.demo.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,14 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Created by kwongiho on 2017. 6. 26..
+ * Created by kwongiho on 2017. 6. 29..
  */
 @Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeleteUserError implements ErrorCustom{
+@ToString
+public class RegisterUserNullError implements ErrorCustom,ErrorDescription{
     private String resultCode;
     private String errorCode;
     private String errorDescription;
+
 }

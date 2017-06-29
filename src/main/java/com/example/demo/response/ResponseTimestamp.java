@@ -1,4 +1,4 @@
-package com.example.demo.error;
+package com.example.demo.response;
 
 import javax.xml.ws.Response;
 
