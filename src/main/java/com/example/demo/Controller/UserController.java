@@ -1,6 +1,5 @@
 package com.example.demo.Controller;
 
-import com.example.demo.DAO.UserDAO;
 import com.example.demo.DTO.UserDTO;
 import com.example.demo.Service.UserService;
 import com.example.demo.response.*;
@@ -14,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.validation.Valid;
 
 /**
  * Created by kwongiho on 2017. 6. 26..
@@ -37,7 +35,7 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping(value="/user.do",method= RequestMethod.POST)
-    public String delete(HttpServletRequest request , HttpServletResponse response , @RequestBody DeleteUser deleteUser) throws Exception {
+    public String delete(HttpServletRequest request , HttpServletResponse response , @Valid @RequestBody DeleteUser deleteUser) throws Exception {
 
 
         String userId = deleteUser.getUserId();
@@ -45,12 +43,13 @@ public class UserController {
 
         System.out.println("User Service : " + service + " / " + userId);
 
-        //임시코드 should be changed in future.
+        // this code deleted on june 29 and apply @Valid annotation.
         /*if(service == null || userId == null)
             return makeJson(
                     new RegisterUserNullError("-1","","userId or service is null")
             );
-*/
+
+        */
         switch (service) {
             case "delete":
                 return jsonOut( userServiceImpl.deleteByUserId(userId));
@@ -58,23 +57,51 @@ public class UserController {
         return null;
     }
 
+
     /**
-     * make json what implements ResponseStatus interface.
-     * @param responseStatus
+     * receive register request.
+     * @param request
+     * @param response
+     * @param userDTO
      * @return
-     * @throws JsonProcessingException
+     * @throws Exception
      */
-    public String makeJson(ResponseStatus responseStatus) throws JsonProcessingException{
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(responseStatus);
-    }
     @RequestMapping(value="/register.do",method=RequestMethod.POST)
-    public String register(HttpServletRequest request,HttpServletResponse response,@RequestBody UserDTO userDTO) throws Exception{
+    public String register(HttpServletRequest request,HttpServletResponse response,@Valid @RequestBody UserDTO userDTO) throws Exception{
         UserDTO registerPerson = userServiceImpl.register(userDTO);
 
         return jsonOutFromRegister(registerPerson);
     }
 
+
+    /**
+     * should be make after complete item class and method.
+     * @param request
+     * @param response
+     * @param userDTO
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="/login.do", method=RequestMethod.POST)
+    public String login(HttpServletRequest request,HttpServletResponse response , @Valid @RequestBody UserDTO userDTO) throws Exception {
+        // presentation code for visualization
+        String userId = userDTO.getUserId(),
+                name = userDTO.getName();
+        int platform = userDTO.getPlatform();
+
+        return null;
+        //return makeJson(userServiceImpl.login(userId,name,platform));
+
+    }
+
+
+
+     /**
+     * used from register method.
+     * @param registerPerson
+     * @return
+     * @throws JsonProcessingException
+     */
     private String jsonOutFromRegister(UserDTO registerPerson) throws JsonProcessingException {
         ResponseStatus responseStatus = null;
 
@@ -122,5 +149,17 @@ public class UserController {
             return makeJson(responseStatus);
         }
 
+    }
+
+
+    /**
+     * make json what implements ResponseStatus interface.
+     * @param responseStatus
+     * @return
+     * @throws JsonProcessingException
+     */
+    public String makeJson(ResponseStatus responseStatus) throws JsonProcessingException{
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(responseStatus);
     }
 }

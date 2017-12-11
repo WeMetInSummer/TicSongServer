@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class DeleteUser {
+public class DeleteUser implements UserRequest , Request{
     @NotNull
     private String userId;
     @NotNull

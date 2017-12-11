@@ -1,17 +1,11 @@
 package com.example.demo.Service;
 
-import com.example.demo.DAO.ItemDAO;
-import com.example.demo.DTO.ItemDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by kwongiho on 2017. 6. 16..
  */
-public class ItemServiceImpl implements ItemService{
-    @Autowired
-    ItemDAO itemDAO;
-    @Override
-    public ItemDTO getItem(String userId) {
-        return itemDAO.findByUserId(userId);
-    }
+@Service(value="ItemService")
+public class ItemServiceImpl  {
+
 }

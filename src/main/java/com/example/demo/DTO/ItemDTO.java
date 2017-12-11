@@ -28,4 +28,5 @@ public class ItemDTO {
     private int item2Cnt;
     private int item3Cnt;
     private int item4Cnt;
+    private Long timestamp;
 }
